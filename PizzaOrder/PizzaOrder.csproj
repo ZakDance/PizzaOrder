@@ -91,6 +91,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="OrderItems.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +125,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="OrderItems.aspx.cs">
+      <DependentUpon>OrderItems.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrderItems.aspx.designer.cs">
+      <DependentUpon>OrderItems.aspx</DependentUpon>
     </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>Model1.tt</DependentUpon>
