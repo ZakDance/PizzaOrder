@@ -29,6 +29,6 @@ namespace PizzaOrder
         public virtual DbSet<Enrolment> Enrolments { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Pizza> Pizzas { get; set; }
-        public virtual DbSet<student> students { get; set; }
+        public virtual DbSet<Students> Students1 { get; set; }
     }
 }

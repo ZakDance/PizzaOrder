@@ -108,7 +108,7 @@
           <Property Name="PizzaPrice" Type="Decimal" Precision="10" Scale="4" />
           <NavigationProperty Name="Person" Relationship="Self.FK_Pizza_ToPerson" FromRole="Pizza" ToRole="Person" />
         </EntityType>
-        <EntityType Name="student">
+        <EntityType Name="Students">
           <Key>
             <PropertyRef Name="studentID" />
           </Key>
@@ -134,7 +134,7 @@
           <EntitySet Name="Enrolments" EntityType="Self.Enrolment" />
           <EntitySet Name="People" EntityType="Self.Person" />
           <EntitySet Name="Pizzas" EntityType="Self.Pizza" />
-          <EntitySet Name="students" EntityType="Self.student" />
+          <EntitySet Name="Students1" EntityType="PizzaDBModel.Students" />
           <AssociationSet Name="FK_Pizza_ToPerson" Association="Self.FK_Pizza_ToPerson">
             <End Role="Person" EntitySet="People" />
             <End Role="Pizza" EntitySet="Pizzas" />
@@ -182,8 +182,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="students">
-            <EntityTypeMapping TypeName="PizzaDBModel.student">
+          <EntitySetMapping Name="Students1">
+            <EntityTypeMapping TypeName="PizzaDBModel.Students">
               <MappingFragment StoreEntitySet="students">
                 <ScalarProperty Name="studentID" ColumnName="studentID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

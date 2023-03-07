@@ -12,7 +12,7 @@ namespace PizzaOrder
     using System;
     using System.Collections.Generic;
     
-    public partial class student
+    public partial class Students
     {
         public int studentID { get; set; }
         public string FirstName { get; set; }
