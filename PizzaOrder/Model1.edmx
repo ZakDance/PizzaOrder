@@ -13,13 +13,15 @@
           <Property Name="level" Type="int" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Enrolment">
+        <EntityType Name="Enrolments">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="EnrolmentID" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" />
-          <Property Name="MyNumber" Type="int" />
+          <Property Name="EnrolmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" />
+          <Property Name="ClassID" Type="int" />
+          <Property Name="DateOfEnrolment" Type="datetime" />
+          <Property Name="TuitionPaid" Type="bit" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -46,6 +48,30 @@
           <Property Name="SecondName" Type="varchar" MaxLength="50" />
           <Property Name="DOB" Type="datetime" />
         </EntityType>
+        <Association Name="FK_Enrolment_ToStudent">
+          <End Role="students" Type="Self.students" Multiplicity="0..1" />
+          <End Role="Enrolments" Type="Self.Enrolments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="students">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Enrolments">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrolment_ToTClass">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="0..1" />
+          <End Role="Enrolments" Type="Self.Enrolments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="Enrolments">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pizza_ToPerson">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
           <End Role="Pizza" Type="Self.Pizza" Multiplicity="*" />
@@ -60,10 +86,18 @@
         </Association>
         <EntityContainer Name="PizzaDBModelStoreContainer">
           <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Enrolment" EntityType="Self.Enrolment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrolments" EntityType="Self.Enrolments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pizza" EntityType="Self.Pizza" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="students" EntityType="Self.students" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Enrolment_ToStudent" Association="Self.FK_Enrolment_ToStudent">
+            <End Role="students" EntitySet="students" />
+            <End Role="Enrolments" EntitySet="Enrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrolment_ToTClass" Association="Self.FK_Enrolment_ToTClass">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Enrolments" EntitySet="Enrolments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pizza_ToPerson" Association="Self.FK_Pizza_ToPerson">
             <End Role="Person" EntitySet="Person" />
             <End Role="Pizza" EntitySet="Pizza" />
@@ -81,14 +115,19 @@
           <Property Name="ClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="level" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Enrolments" Relationship="Self.FK_Enrolment_ToTClass" FromRole="Classes" ToRole="Enrolments" />
         </EntityType>
         <EntityType Name="Enrolment">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="EnrolmentID" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MyNumber" Type="Int32" />
+          <Property Name="EnrolmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" />
+          <Property Name="ClassID" Type="Int32" />
+          <Property Name="DateOfEnrolment" Type="DateTime" Precision="3" />
+          <Property Name="TuitionPaid" Type="Boolean" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_Enrolment_ToTClass" FromRole="Enrolments" ToRole="Classes" />
+          <NavigationProperty Name="student" Relationship="Self.FK_Enrolment_ToStudent" FromRole="Enrolments" ToRole="students" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -108,7 +147,7 @@
           <Property Name="PizzaPrice" Type="Decimal" Precision="10" Scale="4" />
           <NavigationProperty Name="Person" Relationship="Self.FK_Pizza_ToPerson" FromRole="Pizza" ToRole="Person" />
         </EntityType>
-        <EntityType Name="Students">
+        <EntityType Name="Student">
           <Key>
             <PropertyRef Name="studentID" />
           </Key>
@@ -116,7 +155,32 @@
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="SecondName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DOB" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Enrolments" Relationship="Self.FK_Enrolment_ToStudent" FromRole="students" ToRole="Enrolments" />
         </EntityType>
+        <Association Name="FK_Enrolment_ToTClass">
+          <End Role="Classes" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="Enrolments" Type="Self.Enrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="Enrolments">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enrolment_ToStudent">
+          <End Role="students" Type="PizzaDBModel.Student" Multiplicity="0..1" />
+          <End Role="Enrolments" Type="Self.Enrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="students">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Enrolments">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pizza_ToPerson">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
           <End Role="Pizza" Type="Self.Pizza" Multiplicity="*" />
@@ -129,12 +193,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PizzaDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PizzaDBEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Classes" EntityType="Self.Class" />
           <EntitySet Name="Enrolments" EntityType="Self.Enrolment" />
           <EntitySet Name="People" EntityType="Self.Person" />
           <EntitySet Name="Pizzas" EntityType="Self.Pizza" />
-          <EntitySet Name="Students1" EntityType="PizzaDBModel.Students" />
+          <EntitySet Name="Students1" EntityType="PizzaDBModel.Student" />
+          <AssociationSet Name="FK_Enrolment_ToTClass" Association="Self.FK_Enrolment_ToTClass">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="Enrolments" EntitySet="Enrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enrolment_ToStudent" Association="Self.FK_Enrolment_ToStudent">
+            <End Role="students" EntitySet="Students1" />
+            <End Role="Enrolments" EntitySet="Enrolments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Pizza_ToPerson" Association="Self.FK_Pizza_ToPerson">
             <End Role="Person" EntitySet="People" />
             <End Role="Pizza" EntitySet="Pizzas" />
@@ -145,7 +217,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PizzaDBModelStoreContainer" CdmEntityContainer="PizzaDBEntities">
+        <EntityContainerMapping StorageEntityContainer="PizzaDBModelStoreContainer" CdmEntityContainer="PizzaDBEntities1">
           <EntitySetMapping Name="Classes">
             <EntityTypeMapping TypeName="PizzaDBModel.Class">
               <MappingFragment StoreEntitySet="Classes">
@@ -157,10 +229,12 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Enrolments">
             <EntityTypeMapping TypeName="PizzaDBModel.Enrolment">
-              <MappingFragment StoreEntitySet="Enrolment">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MyNumber" ColumnName="MyNumber" />
+              <MappingFragment StoreEntitySet="Enrolments">
+                <ScalarProperty Name="EnrolmentID" ColumnName="EnrolmentID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="DateOfEnrolment" ColumnName="DateOfEnrolment" />
+                <ScalarProperty Name="TuitionPaid" ColumnName="TuitionPaid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -183,7 +257,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Students1">
-            <EntityTypeMapping TypeName="PizzaDBModel.Students">
+            <EntityTypeMapping TypeName="PizzaDBModel.Student">
               <MappingFragment StoreEntitySet="students">
                 <ScalarProperty Name="studentID" ColumnName="studentID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

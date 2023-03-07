@@ -13,10 +13,10 @@ namespace PizzaOrder
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PizzaDBEntities : DbContext
+    public partial class PizzaDBEntities1 : DbContext
     {
-        public PizzaDBEntities()
-            : base("name=PizzaDBEntities")
+        public PizzaDBEntities1()
+            : base("name=PizzaDBEntities1")
         {
         }
     
@@ -29,6 +29,6 @@ namespace PizzaOrder
         public virtual DbSet<Enrolment> Enrolments { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Pizza> Pizzas { get; set; }
-        public virtual DbSet<Students> Students1 { get; set; }
+        public virtual DbSet<Student> Students1 { get; set; }
     }
 }

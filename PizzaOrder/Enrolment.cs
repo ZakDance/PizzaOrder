@@ -14,8 +14,13 @@ namespace PizzaOrder
     
     public partial class Enrolment
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public Nullable<int> MyNumber { get; set; }
+        public int EnrolmentID { get; set; }
+        public Nullable<int> StudentID { get; set; }
+        public Nullable<int> ClassID { get; set; }
+        public Nullable<System.DateTime> DateOfEnrolment { get; set; }
+        public Nullable<bool> TuitionPaid { get; set; }
+    
+        public virtual Class Class { get; set; }
+        public virtual Student student { get; set; }
     }
 }
