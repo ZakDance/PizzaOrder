@@ -127,7 +127,16 @@ namespace PizzaOrder
             txtMyNumber.Text = grdSelectedHuman.SelectedRow.Cells[idxx].Text;
         }
 
+        protected void grdSelectedHuman_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+
         }
+
+        protected void SqlDataSource2_Selecting(object sender, SqlDataSourceSelectingEventArgs e)
+        {
+
+        }
+    }
     }
 
 

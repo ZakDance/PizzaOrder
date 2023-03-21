@@ -28,7 +28,7 @@
             <asp:TextBox ID="txtFirstName0" runat="server"></asp:TextBox>
             <br />
             <br />
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" DeleteCommand="DELETE FROM [Person] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Person] ([FirstName], [MyNumber]) VALUES (@FirstName, @MyNumber)" SelectCommand="SELECT * FROM [Person]" UpdateCommand="UPDATE [Person] SET [FirstName] = @FirstName, [MyNumber] = @MyNumber WHERE [Id] = @Id">
+            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" DeleteCommand="DELETE FROM [Person] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Person] ([FirstName], [MyNumber]) VALUES (@FirstName, @MyNumber)" SelectCommand="SELECT [Id], [FirstName], [MyNumber] FROM [Person]" UpdateCommand="UPDATE [Person] SET [FirstName] = @FirstName, [MyNumber] = @MyNumber WHERE [Id] = @Id" OnSelecting="SqlDataSource2_Selecting">
                 <DeleteParameters>
                     <asp:Parameter Name="Id" Type="Int32" />
                 </DeleteParameters>
@@ -51,48 +51,53 @@
             </asp:GridView>
             <br />
 &nbsp;
-            <asp:Button ID="btnNewItem" runat="server" OnClick="btnNewItem_Click" Text="New Item" />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="btnSaveNewItem" runat="server" Text="Save New Item" />
+           
+&nbsp;<asp:Button ID="btnNewItem" runat="server" Text="New Item" />
+            &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;
             <asp:Button ID="btnSaveEdit" runat="server" Text="Save Edit" />
 &nbsp;&nbsp;&nbsp;
             <asp:Button ID="btnDeleteItem" runat="server" Text="Delete Item" />
+            <asp:Button ID="btnSaveNewItem" runat="server" Text="Save New Item" />
             <br />
             <br />
             &nbsp; 
             <br />
             <br />
-            <asp:GridView ID="grdSelectedHuman" runat="server" AutoGenerateColumns="False" AutoGenerateSelectButton="True" DataKeyNames="Id" DataSourceID="SqlDataSource2" OnSelectedIndexChanged="grdSelectedPerson_SelectedIndexChanged">
+            
+                <Columns>
+                    
+                </Columns>
+           
+            <br />
+            <br />
+            <asp:GridView ID="grdSelectedHuman" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="grdSelectedHuman_SelectedIndexChanged1">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="FirstName" HeaderText="FirstName" SortExpression="FirstName" />
                     <asp:BoundField DataField="MyNumber" HeaderText="MyNumber" SortExpression="MyNumber" />
                 </Columns>
             </asp:GridView>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT * FROM [Person]">
+            </asp:SqlDataSource>
             <br />
-            <br />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource5">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource3">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:BoundField DataField="Customer_ID" HeaderText="Customer_ID" SortExpression="Customer_ID" />
                     <asp:BoundField DataField="PizzaPrice" HeaderText="PizzaPrice" SortExpression="PizzaPrice" />
                 </Columns>
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" DeleteCommand="DELETE FROM [Person] WHERE [Id] = @Id" InsertCommand="INSERT INTO [Person] ([FirstName], [MyNumber]) VALUES (@FirstName, @MyNumber)" SelectCommand="SELECT * FROM [Person]" UpdateCommand="UPDATE [Person] SET [FirstName] = @FirstName, [MyNumber] = @MyNumber WHERE [Id] = @Id">
-                <DeleteParameters>
-                    <asp:Parameter Name="Id" Type="Int32" />
-                </DeleteParameters>
-                <InsertParameters>
-                    <asp:Parameter Name="FirstName" Type="String" />
-                    <asp:Parameter Name="MyNumber" Type="Int32" />
-                </InsertParameters>
-                <UpdateParameters>
-                    <asp:Parameter Name="FirstName" Type="String" />
-                    <asp:Parameter Name="MyNumber" Type="Int32" />
-                    <asp:Parameter Name="Id" Type="Int32" />
-                </UpdateParameters>
-            </asp:SqlDataSource>
+            <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT [Id], [Customer_ID], [PizzaPrice] FROM [Pizza]"></asp:SqlDataSource>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <br />
             <asp:Label ID="lblPizza" runat="server" Text="Pizza ID:"></asp:Label>
             <asp:TextBox ID="txtPizzaID" runat="server"></asp:TextBox>
@@ -112,7 +117,7 @@
             <asp:Button ID="btnShowSession" runat="server" Text="ShowSession" />
             <br />
             <br />
-            <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click1" Text="Submit" />
+            
             <br />
             <br />
             <br />

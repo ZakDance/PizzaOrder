@@ -19,8 +19,6 @@ namespace PizzaOrder
         public Nullable<int> ClassID { get; set; }
         public Nullable<System.DateTime> DateOfEnrolment { get; set; }
         public Nullable<bool> TuitionPaid { get; set; }
-    
         public virtual Class Class { get; set; }
-        public virtual Student student { get; set; }
     }
 }
